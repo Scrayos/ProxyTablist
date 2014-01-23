@@ -4,7 +4,7 @@
 
     <name>ProxyTablist</name>
     <url>http://plugins.justchunks.net/custom/ProxyTablist</url>
-    <version>1.2</version>
+    <version>1.3</version>
     <description>Customizes your Tablist on GLOBAL-mode!</description>
     <groupId>eu.scrayos</groupId>
     <artifactId>proxytablist</artifactId>

@@ -1,26 +1,23 @@
 package eu.scrayos.proxytablist.handlers;
 
 import eu.scrayos.proxytablist.ProxyTablist;
-import eu.scrayos.proxytablist.objects.Variable;
+import eu.scrayos.proxytablist.api.Variable;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.logging.Level;
 
 public class DataHandler {
-
-    private final HashSet<Variable> variables;
-    private int refreshID;
-    private final HashSet<String> strings;
+    private final HashSet<Variable> variables = new HashSet<>();
+    private final HashMap<ProxiedPlayer, PlayerStringStorage> playerStorages = new HashMap<>();
+    private int refreshID = 0;
 
     public DataHandler() {
-        variables = new HashSet<>();
-        strings = new HashSet<>();
-        refreshID = 0;
-
         File[] files = new File(ProxyTablist.getInstance().getDataFolder() + "/variables").listFiles();
         if (files != null) {
             HashSet<URL> urls = new HashSet<>(files.length);
@@ -44,11 +41,17 @@ public class DataHandler {
                     }
                     Class<?> aClass = loader.loadClass(file.getName().substring(0, file.getName().lastIndexOf(".")));
                     Object object = aClass.newInstance();
-                    if (!(object instanceof Variable)) {
+
+
+                    if (object instanceof Variable) {
+                        Variable variable = (Variable) object;
+                        variable.init(ProxyTablist.getInstance());
+
+                        addVariable(variable);
+                    } else {
                         ProxyTablist.getInstance().getLogger().log(Level.WARNING, "Error while loading " + file.getName() + " (No Variable)");
                         continue;
                     }
-                    variables.add((Variable) object);
                 } catch (Exception ex) {
                     ProxyTablist.getInstance().getLogger().log(Level.WARNING, "Error while loading " + file.getName() + " (Unspecified Error)");
                     ex.printStackTrace();
@@ -57,28 +60,32 @@ public class DataHandler {
         }
     }
 
+    private void addVariable(Variable variable) {
+        variables.add(variable);
+    }
+
     public int getRefreshID() {
         refreshID++;
         return refreshID - 1;
     }
 
-    public HashSet<Variable> getVariables() {
-        return variables;
+    public PlayerStringStorage getStringStorage(ProxiedPlayer proxiedPlayer) {
+        if(!playerStorages.containsKey(proxiedPlayer)) {
+            playerStorages.put(proxiedPlayer, new PlayerStringStorage());
+        }
+
+        return playerStorages.get(proxiedPlayer);
     }
 
-    public HashSet<String> getStrings() {
-        return strings;
-    }
-
-    public void addString(String arg) {
-        strings.add(arg);
-    }
-
-    public void resetStrings() {
-        strings.clear();
+    public void removeStorage(ProxiedPlayer proxiedPlayer) {
+        playerStorages.remove(proxiedPlayer);
     }
 
     public String verifyEntry(String arg) {
         return (arg.length() > 16 ? arg.substring(0, 16) : arg);
+    }
+
+    public HashSet<Variable> getVariables() {
+        return variables;
     }
 }

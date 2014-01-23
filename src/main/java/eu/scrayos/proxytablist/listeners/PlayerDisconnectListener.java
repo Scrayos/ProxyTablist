@@ -18,6 +18,7 @@ public class PlayerDisconnectListener implements Listener {
                 ProxyTablist.getInstance().getTablist().refresh();
             }
         }, 100, TimeUnit.MILLISECONDS);
-        ProxyTablist.getInstance().getTablist().refresh();
+
+        ProxyTablist.getInstance().getDataHandler().removeStorage(e.getPlayer());
     }
 }

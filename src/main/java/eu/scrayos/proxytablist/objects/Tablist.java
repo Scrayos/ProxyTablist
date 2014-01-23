@@ -1,6 +1,9 @@
 package eu.scrayos.proxytablist.objects;
 
 import eu.scrayos.proxytablist.ProxyTablist;
+import eu.scrayos.proxytablist.api.BasisVariable;
+import eu.scrayos.proxytablist.api.PlayerVariable;
+import eu.scrayos.proxytablist.api.Variable;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.tab.CustomTabList;
 import net.md_5.bungee.protocol.packet.PlayerListItem;
@@ -21,6 +24,7 @@ public class Tablist implements CustomTabList {
                     ProxyTablist.getInstance().getConfig().set("customcolumns." + (c + 1), new ArrayList<>(new HashSet<>(Arrays.asList(new String[]{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""}))));
                     ProxyTablist.getInstance().saveConfig();
                 }
+
                 String columnvalue = ProxyTablist.getInstance().getConfig().getStringList("customcolumns." + (c + 1)).get(r);
                 if (columnvalue != null) {
                     boolean placed = false;
@@ -30,12 +34,26 @@ public class Tablist implements CustomTabList {
                             if (m.find()) {
                                 m.reset();
 
-                                Short shrt = 0;
-                                String text = ProxyTablist.getInstance().getDataHandler().verifyEntry(v.getText(columnvalue.substring(1), refreshID, shrt));
-                                if (!text.equals("")) {
+                                if(v instanceof BasisVariable) {
+                                    Short shrt = 0;
+                                    String text = ProxyTablist.getInstance().getDataHandler().verifyEntry(v.getText(columnvalue.substring(1), refreshID, shrt));
+                                    if (!text.equals("")) {
+                                        for (ProxiedPlayer pp : ProxyTablist.getInstance().getProxy().getPlayers()) {
+                                            pp.unsafe().sendPacket(new PlayerListItem(text, true, shrt));
+                                            ProxyTablist.getInstance().getDataHandler().getStringStorage(pp).addString(text);
+                                        }
+                                    }
+                                }
+
+                                if(v instanceof PlayerVariable) {
                                     for (ProxiedPlayer pp : ProxyTablist.getInstance().getProxy().getPlayers()) {
-                                        pp.unsafe().sendPacket(new PlayerListItem(text, true, shrt));
-                                        ProxyTablist.getInstance().getDataHandler().addString(text);
+                                        Short shrt = 0;
+                                        String text = ProxyTablist.getInstance().getDataHandler().verifyEntry(v.getText(columnvalue.substring(1), refreshID, shrt, pp));
+
+                                        if (!text.equals("")) {
+                                            pp.unsafe().sendPacket(new PlayerListItem(text, true, shrt));
+                                            ProxyTablist.getInstance().getDataHandler().getStringStorage(pp).addString(text);
+                                        }
                                     }
                                 }
 
@@ -43,10 +61,11 @@ public class Tablist implements CustomTabList {
                             }
                         }
                     }
+
                     if (!placed) {
                         for (ProxiedPlayer pp : ProxyTablist.getInstance().getProxy().getPlayers()) {
                             pp.unsafe().sendPacket(new PlayerListItem(ProxyTablist.getInstance().getDataHandler().verifyEntry(columnvalue), true, (short) 0));
-                            ProxyTablist.getInstance().getDataHandler().addString(ProxyTablist.getInstance().getDataHandler().verifyEntry(columnvalue));
+                            ProxyTablist.getInstance().getDataHandler().getStringStorage(pp).addString(ProxyTablist.getInstance().getDataHandler().verifyEntry(columnvalue));
                         }
                     }
                 }
@@ -56,12 +75,13 @@ public class Tablist implements CustomTabList {
 
     @Override
     public synchronized void clear() {
-        for (String s : ProxyTablist.getInstance().getDataHandler().getStrings()) {
-            for (ProxiedPlayer pp : ProxyTablist.getInstance().getProxy().getPlayers()) {
+        for (ProxiedPlayer pp : ProxyTablist.getInstance().getProxy().getPlayers()) {
+            for (String s : ProxyTablist.getInstance().getDataHandler().getStringStorage(pp).getStrings()) {
                 pp.unsafe().sendPacket(new PlayerListItem(s, false, (short) 0));
             }
+
+            ProxyTablist.getInstance().getDataHandler().getStringStorage(pp).clearStorage();
         }
-        ProxyTablist.getInstance().getDataHandler().resetStrings();
     }
 
     @Override
