@@ -11,7 +11,6 @@ public class PostLoginListener implements Listener {
     @EventHandler
     public void onPostLogin(final PostLoginEvent e) {
         e.getPlayer().setTabList(ProxyTablist.getInstance().getTablist());
-
         GlobalTablistView.createPlayerTablistView(e.getPlayer());
     }
 }

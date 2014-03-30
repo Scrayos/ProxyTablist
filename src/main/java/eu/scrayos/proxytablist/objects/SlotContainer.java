@@ -1,8 +1,5 @@
 package eu.scrayos.proxytablist.objects;
 
-/**
- * @author geNAZt (fabian.fassbender42@googlemail.com)
- */
 public class SlotContainer {
     private String text;
     private Short ping;
@@ -13,7 +10,7 @@ public class SlotContainer {
     }
 
     public String getText() {
-        return text;
+        return (text.length() > 16 ? text.substring(0, 16) : text);
     }
 
     public void setText(String text) {

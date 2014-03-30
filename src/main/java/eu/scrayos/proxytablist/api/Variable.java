@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * That is the interface for custom Variables. The variables should be in the <b>"/plugins/ProxyTablist/variables/"</b> -
  * Directory.
- *
+ * <p/>
  * A variable is able to refuse to update. But every Variable should at least update once into the Global Tablist per refresh Cycle.
  * If it does not it can destroy the View
  *
@@ -33,7 +33,7 @@ public interface Variable {
     /**
      * Checks if the Variable has an update for this slot and player
      *
-     * @param slot to check for an update
+     * @param slot          to check for an update
      * @param proxiedPlayer to check for an update
      * @return true when there is an update, false when not
      */
@@ -48,6 +48,7 @@ public interface Variable {
 
     /**
      * Checks if the next Text is for the Global Tablist
+     *
      * @return true for the global Tablist, false for the PlayerView
      */
     public boolean isForGlobalTablist();
@@ -57,7 +58,6 @@ public interface Variable {
      * queried everytime the Tablist refreshes.
      *
      * @param pingRef The reference of the ping that this Column will got. Change it to modify the ping.
-     *
      * @return The Text or Value this Variable contains.
      */
     public String getText(Short pingRef);

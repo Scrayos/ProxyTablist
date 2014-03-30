@@ -7,18 +7,17 @@ import net.md_5.bungee.api.tab.CustomTabList;
 public class Tablist implements CustomTabList {
     @Override
     public synchronized void clear() {
-        //Do nothing
+        //NOTHING
     }
 
     @Override
     public int getColumns() {
-        return (int) Math.floor(ProxyTablist.getInstance().getProxy().getConfigurationAdapter().getListeners().iterator().next().getTabListSize() / 20);
+        return (int) Math.floor(getSize() / 20);
     }
 
     @Override
     public int getRows() {
-        int size = ProxyTablist.getInstance().getProxy().getConfigurationAdapter().getListeners().iterator().next().getTabListSize();
-        return (size > 20 ? 20 : size);
+        return (getSize() > 20 ? 20 : getSize());
     }
 
     @Override
@@ -38,32 +37,32 @@ public class Tablist implements CustomTabList {
 
     @Override
     public void update() {
-        //Do nothing
+        //NOTHING
     }
 
     @Override
     public void init(ProxiedPlayer proxiedPlayer) {
-        //DO NOTHING
+        //NOTHING
     }
 
     @Override
     public void onConnect() {
-        //DO NOTHING
+        //NOTHING
     }
 
     @Override
     public void onServerChange() {
-        //DO NOTHING
+        //NOTHING
     }
 
     @Override
     public void onPingChange(int i) {
-        //DO NOTHING
+        //NOTHING
     }
 
     @Override
     public void onDisconnect() {
-        //DO NOTHING
+        //NOTHING
     }
 
     @Override

@@ -18,7 +18,6 @@ public class MainCommand extends Command {
         } else {
             switch (strings[0]) {
                 case "reload":
-                    //TO BE IMPLEMENTED
                     ProxyTablist.getInstance().getDataHandler().loadVariables();
             }
         }

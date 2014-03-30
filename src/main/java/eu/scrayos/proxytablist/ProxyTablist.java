@@ -27,8 +27,9 @@ public class ProxyTablist extends ConfigurablePlugin {
         new File(getDataFolder() + "/variables").mkdirs();
         saveDefaultConfig();
         tl = new Tablist();
+        is = this;
         dh = new DataHandler();
-
+        is = this;
         //Init the GlobalView
         GlobalTablistView.init();
 
