@@ -156,9 +156,9 @@ public class DataHandler {
                                 text = getPlaceholder(refreshId);
                             }
                             if (global) {
-                                GlobalTablistView.setSlot(slot + 1, text, ping);
+                                GlobalTablistView.setSlot(slot + 1, ChatColor.translateAlternateColorCodes('&', text), ping);
                             } else {
-                                GlobalTablistView.getPlayerTablistView(pp).setSlot(slot + 1, text, ping);
+                                GlobalTablistView.getPlayerTablistView(pp).setSlot(slot + 1, ChatColor.translateAlternateColorCodes('&', text), ping);
                             }
                         }
                     }
