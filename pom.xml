@@ -4,7 +4,7 @@
 
     <name>ProxyTablist</name>
     <url>http://plugins.justchunks.net/custom/ProxyTablist</url>
-    <version>1.6</version>
+    <version>1.6.1</version>
     <description>Customizes your Tablist on GLOBAL-mode!</description>
     <groupId>eu.scrayos</groupId>
     <artifactId>proxytablist</artifactId>
@@ -58,13 +58,20 @@
             <id>craftminecraft-dev</id>
             <url>http://repo.craftminecraft.net/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>cubespace</id>
+            <url>http://nexus.cube-space.net/content/groups/public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
 
     <dependencies>
         <dependency>
             <groupId>net.md-5</groupId>
-            <artifactId>bungeecord-api</artifactId>
-            <version>1.7-SNAPSHOT</version>
+            <artifactId>bungeecord-parent</artifactId>
+            <version>1.7.2</version>
             <type>jar</type>
         </dependency>
         <dependency>
