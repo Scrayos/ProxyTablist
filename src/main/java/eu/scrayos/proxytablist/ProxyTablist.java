@@ -23,6 +23,7 @@ public class ProxyTablist extends Plugin {
     private static ProxyTablist instance;
     private TablistHandler tablistHandler;
     private DataHandler dataHandler;
+    private int size;
     private Config config;
 
     public static ProxyTablist getInstance() {
@@ -31,6 +32,8 @@ public class ProxyTablist extends Plugin {
 
     @Override
     public void onEnable() {
+        instance = this;
+        size = getProxy().getConfigurationAdapter().getListeners().iterator().next().getTabListSize();
         new File(getDataFolder() + "/variables").mkdirs();
         try {
             config = new Config(this);
@@ -60,8 +63,7 @@ public class ProxyTablist extends Plugin {
 
 
         try {
-            Metrics metrics = new Metrics(this);
-            metrics.start();
+            new Metrics(this).start();
         } catch (Exception ex) {
             getLogger().log(Level.WARNING, "Failed to initialize Metrics!");
         }

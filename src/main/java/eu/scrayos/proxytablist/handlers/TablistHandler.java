@@ -12,7 +12,7 @@ public class TablistHandler implements CustomTabList {
 
     @Override
     public int getColumns() {
-        return (int) Math.floor(getSize() / 20);
+        return (int) Math.ceil(getSize() / 20);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class TablistHandler implements CustomTabList {
 
     @Override
     public int getSize() {
-        return ProxyTablist.getInstance().getProxy().getConfigurationAdapter().getListeners().iterator().next().getTabListSize();
+        return ProxyTablist.getInstance().getSize();
     }
 
     @Override

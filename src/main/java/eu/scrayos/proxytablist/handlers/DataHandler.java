@@ -121,9 +121,9 @@ public class DataHandler {
                 } else {
                     VariableContainer currentVariable = variableContainers[slot];
                     for (ProxiedPlayer pp : ProxyTablist.getInstance().getProxy().getPlayers()) {
-                        Short ping = 0;
                         Boolean global = true;
                         Boolean updated = false;
+                        short ping = 0;
                         String text = ChatColor.translateAlternateColorCodes('&', columnvalue);
 
                         for (int i = 0; i < currentVariable.getVariable().size(); i++) {
@@ -131,8 +131,9 @@ public class DataHandler {
                             variable.setMatchResult(currentVariable.getFoundStr().get(i));
                             variable.setRefreshId(refreshId);
                             if (variable.hasUpdate(slot, pp)) {
-                                text = text.replace(currentVariable.getFoundStr().get(i).group(), variable.getText(ping));
-                                global = global && variable.isForGlobalTablist();
+                                text = text.replace(currentVariable.getFoundStr().get(i).group(), variable.getText());
+                                ping = variable.getPing();
+                                global = global && variable.isGlobal();
                                 updated = true;
                             }
                         }

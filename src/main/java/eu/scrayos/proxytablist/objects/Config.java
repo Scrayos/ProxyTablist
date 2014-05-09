@@ -37,12 +37,12 @@ public class Config extends net.cubespace.Yamler.Config.Config {
                 "#|                                     Lots of Fun!                                    |#",
                 "                                                                                         "
         };
-        CONFIG_FILE = new File(plugin.getDataFolder() + "config.yml");
+        CONFIG_FILE = new File(plugin.getDataFolder() + "/config.yml");
         CONFIG_MODE = ConfigMode.DEFAULT;
-        for (int ic = 1; ic <= ProxyTablist.getInstance().getTablistHandler().getColumns(); ic++) {
+        for (int ic = 1; ic <= (int) Math.ceil(ProxyTablist.getInstance().getSize() / 20); ic++) {
             customColumns.put(ic, new ArrayList<String>() {
             });
-            for (int ir = 0; ir < ProxyTablist.getInstance().getTablistHandler().getRows(); ir++) {
+            for (int ir = 0; ir < (ProxyTablist.getInstance().getSize() < 20 ? ProxyTablist.getInstance().getSize() : 20); ir++) {
                 customColumns.get(ic).add("{player}");
             }
         }

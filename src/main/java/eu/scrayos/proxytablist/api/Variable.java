@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  * If it does not it can destroy the View
  *
  * @author Scrayos
- * @version 1
+ * @version 2
  */
 public interface Variable {
     /**
@@ -52,14 +52,20 @@ public interface Variable {
      *
      * @return true for the global Tablist, false for the PlayerView
      */
-    public boolean isForGlobalTablist();
+    public boolean isGlobal();
 
     /**
      * The Text or Value this Variable contains. The found matches will get replaced by this. The Text or Value is
      * queried everytime the Tablist refreshes.
      *
-     * @param pingRef The reference of the ping that this Column will got. Change it to modify the ping.
      * @return The Text or Value this Variable contains.
      */
-    public String getText(Short pingRef);
+    public String getText();
+
+    /**
+     * The Ping the TabCell should have.
+     *
+     * @return The reference of the ping that this Column will got. Change it to modify the ping.
+     */
+    public short getPing();
 }
