@@ -8,11 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GlobalTablistView {
-    //The global Views
     private static SlotContainer[] currentView;
     private static SlotContainer[] newView;
 
-    //Hold all PlayerTablistViews
     private static HashMap<ProxiedPlayer, PlayerTablistView> playerTablistViews = new HashMap<>();
 
     /**

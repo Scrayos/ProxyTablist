@@ -8,13 +8,12 @@ import eu.scrayos.proxytablist.listeners.PostLoginListener;
 import eu.scrayos.proxytablist.listeners.ServerSwitchListener;
 import eu.scrayos.proxytablist.objects.GlobalTablistView;
 import eu.scrayos.proxytablist.objects.Tablist;
-import net.craftminecraft.bungee.bungeeyaml.pluginapi.ConfigurablePlugin;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-public class ProxyTablist extends ConfigurablePlugin {
+public class ProxyTablist extends Configurablelugin {
 
     private static ProxyTablist is;
     private Tablist tl;

@@ -23,7 +23,7 @@
     <licenses>
         <license>
             <name>JustChunksLicense</name>
-            <url>http://justchunks.net/misc/licenses/justchunks.txt</url>
+            <url>http://justchunks.net/lib/licenses/justchunks.txt</url>
             <distribution>repo</distribution>
             <comments>-</comments>
         </license>
@@ -55,8 +55,12 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>craftminecraft-dev</id>
-            <url>http://repo.craftminecraft.net/content/groups/public/</url>
+            <id>yamler</id>
+            <url>http://nexus.cube-space.net/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>metrics</id>
+            <url>http://repo.mcstats.org/content/repositories/public</url>
         </repository>
     </repositories>
 
@@ -68,10 +72,16 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>net.craftminecraft.bungee</groupId>
-            <artifactId>bungeeyaml</artifactId>
-            <version>1.2</version>
-            <type>jar</type>
+            <groupId>net.cubespace</groupId>
+            <artifactId>Yamler-Core</artifactId>
+            <version>2.2.3-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mcstats.bungee</groupId>
+            <artifactId>metrics</artifactId>
+            <version>R7</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -108,20 +118,25 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <archive>
-                        <addMavenDescriptor>false</addMavenDescriptor>
-                        <manifest>
-                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                        </manifest>
-                        <manifestEntries>
-                            <Main-Class>${project.groupId}.${project.artifactId}.${project.name}</Main-Class>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <minimizeJar>true</minimizeJar>
+                            <relocations>
+                                <relocation>
+                                    <pattern>org.mcstats</pattern>
+                                    <shadedPattern>eu.scrayos.proxytablist.mcstats</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
