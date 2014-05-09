@@ -5,7 +5,7 @@ import eu.scrayos.proxytablist.handlers.DataHandler;
 import eu.scrayos.proxytablist.include.Metrics;
 import eu.scrayos.proxytablist.listeners.PlayerDisconnectListener;
 import eu.scrayos.proxytablist.listeners.PostLoginListener;
-import eu.scrayos.proxytablist.listeners.ServerConnectedListener;
+import eu.scrayos.proxytablist.listeners.ServerSwitchListener;
 import eu.scrayos.proxytablist.objects.GlobalTablistView;
 import eu.scrayos.proxytablist.objects.Tablist;
 import net.craftminecraft.bungee.bungeeyaml.pluginapi.ConfigurablePlugin;
@@ -33,7 +33,7 @@ public class ProxyTablist extends ConfigurablePlugin {
         //Init the GlobalView
         GlobalTablistView.init();
 
-        getProxy().getPluginManager().registerListener(this, new ServerConnectedListener());
+        getProxy().getPluginManager().registerListener(this, new ServerSwitchListener());
         getProxy().getPluginManager().registerListener(this, new PostLoginListener());
         getProxy().getPluginManager().registerListener(this, new PlayerDisconnectListener());
         getProxy().getPluginManager().registerCommand(this, new MainCommand());

@@ -51,15 +51,11 @@ public class GlobalTablistView {
     }
 
     /**
-     * Create a new PlayerTablistView for the Player. If there was an old one it gets deleted
+     * Create a new PlayerTablistView for the Player. If there was an old one it gets replaced
      *
      * @param proxiedPlayer
      */
     public static void createPlayerTablistView(ProxiedPlayer proxiedPlayer) {
-        if (playerTablistViews.containsKey(proxiedPlayer)) {
-            playerTablistViews.remove(proxiedPlayer);
-        }
-
         playerTablistViews.put(proxiedPlayer, new PlayerTablistView(proxiedPlayer));
     }
 
