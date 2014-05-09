@@ -35,6 +35,7 @@ public class ProxyTablist extends Plugin {
         try {
             config = new Config(this);
             config.init();
+            config.save();
         } catch (Exception ex) {
             System.out.println("Your Configuration-File for ProxyTablist doesn't match the standards for YAML-Files. Please revisit it.");
         }
