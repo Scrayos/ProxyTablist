@@ -57,7 +57,7 @@ public class ProxyTablist extends Plugin {
         getProxy().getScheduler().schedule(this, new Runnable() {
             @Override
             public void run() {
-                dataHandler.update();
+                tablistHandler.update();
             }
         }, getConfig().getAutoRefresh(), getConfig().getAutoRefresh(), TimeUnit.SECONDS);
 

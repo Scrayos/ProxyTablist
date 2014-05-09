@@ -39,7 +39,7 @@ public class Config extends net.cubespace.Yamler.Config.Config {
         };
         CONFIG_FILE = new File(plugin.getDataFolder() + "/config.yml");
         CONFIG_MODE = ConfigMode.DEFAULT;
-        for (int ic = 1; ic <= (int) Math.ceil(ProxyTablist.getInstance().getSize() / 20); ic++) {
+        for (int ic = 0; ic < (int) Math.ceil(ProxyTablist.getInstance().getSize() / 20); ic++) {
             customColumns.put(ic, new ArrayList<String>() {
             });
             for (int ir = 0; ir < (ProxyTablist.getInstance().getSize() < 20 ? ProxyTablist.getInstance().getSize() : 20); ir++) {

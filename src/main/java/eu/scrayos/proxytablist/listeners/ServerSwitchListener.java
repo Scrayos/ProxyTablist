@@ -9,6 +9,6 @@ public class ServerSwitchListener implements Listener {
 
     @EventHandler
     public void onServerSwitch(ServerSwitchEvent e) {
-        ProxyTablist.getInstance().getDataHandler().update();
+        ProxyTablist.getInstance().getTablistHandler().update();
     }
 }
