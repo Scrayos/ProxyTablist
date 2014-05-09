@@ -24,6 +24,7 @@
     <orderEntry type="library" name="Maven: io.netty:netty-common:4.0.17.Final" level="project" />
     <orderEntry type="library" name="Maven: net.cubespace:Yamler-Core:2.2.3-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.mcstats.bungee:metrics:R7" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.12.6" level="project" />
   </component>
 </module>
 

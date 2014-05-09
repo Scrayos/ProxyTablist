@@ -1,13 +1,10 @@
-package eu.scrayos.proxytablist.handlers;
+package eu.scrayos.proxytablist.objects;
 
 import eu.scrayos.proxytablist.api.Variable;
 
 import java.util.ArrayList;
 import java.util.regex.MatchResult;
 
-/**
- * @author geNAZt (fabian.fassbender42@googlemail.com)
- */
 public class VariableContainer {
     private final ArrayList<Variable> variable = new ArrayList<>();
     private final ArrayList<MatchResult> foundStr = new ArrayList<>();

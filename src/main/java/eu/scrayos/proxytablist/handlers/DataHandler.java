@@ -3,11 +3,11 @@ package eu.scrayos.proxytablist.handlers;
 import eu.scrayos.proxytablist.ProxyTablist;
 import eu.scrayos.proxytablist.api.Variable;
 import eu.scrayos.proxytablist.objects.GlobalTablistView;
+import eu.scrayos.proxytablist.objects.VariableContainer;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
@@ -28,36 +28,28 @@ public class DataHandler {
     private int refreshID = -1;
 
     public DataHandler() {
-        //Load variables
         loadVariables();
-
-        //Read in the config
-        loadConfigTablist();
+        loadConfig();
     }
 
     public void loadVariables() {
         File[] files = new File(ProxyTablist.getInstance().getDataFolder() + "/variables").listFiles();
         if (files != null) {
-            //Check for Files who end with a .jar and add them to the be loaded list
             HashSet<URL> urls = new HashSet<>(files.length);
             for (File file : files) {
                 try {
                     if (file.getName().endsWith(".jar")) {
                         urls.add(file.toURI().toURL());
                     }
-                } catch (MalformedURLException ignored) {
+                } catch (Exception ignored) {
                 }
             }
-
-            //Try to build the Classloader with which the JARs should be loaded
             ClassLoader loader = null;
             try {
                 loader = new URLClassLoader(urls.toArray(new URL[urls.size()]), Variable.class.getClassLoader());
             } catch (Exception ignored) {
                 ignored.printStackTrace();
             }
-
-            //If there is a valid Classloader load the jars
             if (loader != null) {
                 for (File file : files) {
                     try {
@@ -85,23 +77,16 @@ public class DataHandler {
     /**
      * This reads in the current custom columns and parses them into the correct Variable
      */
-    public void loadConfigTablist() {
-        variableContainers = new VariableContainer[ProxyTablist.getInstance().getTablist().getSize()];
+    public void loadConfig() {
+        variableContainers = new VariableContainer[ProxyTablist.getInstance().getTablistHandler().getSize()];
 
         //Keep track of the Array slot :)
         int slot = 0;
 
         //Check each Row first so we check them as they get delivered
-        for (int r = 0; r < ProxyTablist.getInstance().getTablist().getRows(); r++) {
-            for (int c = 0; c < ProxyTablist.getInstance().getTablist().getColumns(); c++) {
-                //If there is a Column which is not in the Config, create a new empty column for it
-                if (ProxyTablist.getInstance().getConfig().getStringList("customcolumns." + (c + 1)).size() == 0) {
-                    ProxyTablist.getInstance().getConfig().set("customcolumns." + (c + 1), new ArrayList<>(new HashSet<>(Arrays.asList(new String[]{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""}))));
-                    ProxyTablist.getInstance().saveConfig();
-                }
-
-                //Check which Column handles this slot
-                String columnvalue = ProxyTablist.getInstance().getConfig().getStringList("customcolumns." + (c + 1)).get(r);
+        for (int r = 0; r < ProxyTablist.getInstance().getTablistHandler().getRows(); r++) {
+            for (int c = 0; c < ProxyTablist.getInstance().getTablistHandler().getColumns(); c++) {
+                String columnvalue = ProxyTablist.getInstance().getConfig().getCustomColumns().get(c + 1).get(r);
                 for (Variable v : loadedVariables) {
                     Matcher m = v.getPattern().matcher(columnvalue);
 
@@ -124,9 +109,9 @@ public class DataHandler {
     public void update() {
         int refreshId = getRefreshID();
         int slot = 0;
-        for (int r = 0; r < ProxyTablist.getInstance().getTablist().getRows(); r++) {
-            for (int c = 0; c < ProxyTablist.getInstance().getTablist().getColumns(); c++) {
-                String columnvalue = ProxyTablist.getInstance().getConfig().getStringList("customcolumns." + (c + 1)).get(r);
+        for (int r = 0; r < ProxyTablist.getInstance().getTablistHandler().getRows(); r++) {
+            for (int c = 0; c < ProxyTablist.getInstance().getTablistHandler().getColumns(); c++) {
+                String columnvalue = ProxyTablist.getInstance().getConfig().getCustomColumns().get(c + 1).get(r);
                 if (variableContainers[slot] == null) {
                     if (columnvalue.isEmpty()) {
                         GlobalTablistView.setSlot(slot + 1, getPlaceholder(refreshId), (short) 0);

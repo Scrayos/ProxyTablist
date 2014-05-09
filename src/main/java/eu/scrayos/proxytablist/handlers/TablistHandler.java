@@ -1,10 +1,10 @@
-package eu.scrayos.proxytablist.objects;
+package eu.scrayos.proxytablist.handlers;
 
 import eu.scrayos.proxytablist.ProxyTablist;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.tab.CustomTabList;
 
-public class Tablist implements CustomTabList {
+public class TablistHandler implements CustomTabList {
     @Override
     public synchronized void clear() {
         //NOTHING

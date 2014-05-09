@@ -2,34 +2,47 @@ package eu.scrayos.proxytablist;
 
 import eu.scrayos.proxytablist.commands.MainCommand;
 import eu.scrayos.proxytablist.handlers.DataHandler;
-import eu.scrayos.proxytablist.include.Metrics;
+import eu.scrayos.proxytablist.handlers.TablistHandler;
 import eu.scrayos.proxytablist.listeners.PlayerDisconnectListener;
 import eu.scrayos.proxytablist.listeners.PostLoginListener;
 import eu.scrayos.proxytablist.listeners.ServerSwitchListener;
+import eu.scrayos.proxytablist.objects.Config;
 import eu.scrayos.proxytablist.objects.GlobalTablistView;
-import eu.scrayos.proxytablist.objects.Tablist;
+import lombok.Getter;
+import net.md_5.bungee.api.plugin.Plugin;
+import org.mcstats.Metrics;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-public class ProxyTablist extends Configurablelugin {
+@SuppressWarnings("ResultOfMethodCallIgnored")
+@Getter
+public class ProxyTablist extends Plugin {
 
-    private static ProxyTablist is;
-    private Tablist tl;
-    private DataHandler dh;
+    private static ProxyTablist instance;
+    private TablistHandler tablistHandler;
+    private DataHandler dataHandler;
+    private Config config;
+
+    public static ProxyTablist getInstance() {
+        return instance;
+    }
 
     @Override
     public void onEnable() {
-        is = this;
-
         new File(getDataFolder() + "/variables").mkdirs();
-        saveDefaultConfig();
-        tl = new Tablist();
-        is = this;
-        dh = new DataHandler();
-        is = this;
-        //Init the GlobalView
+        try {
+            config = new Config(this);
+            config.init();
+        } catch (Exception ex) {
+            System.out.println("Your Configuration-File for ProxyTablist doesn't match the standards for YAML-Files. Please revisit it.");
+        }
+        instance = this;
+        tablistHandler = new TablistHandler();
+        instance = this;
+        dataHandler = new DataHandler();
+        instance = this;
         GlobalTablistView.init();
 
         getProxy().getPluginManager().registerListener(this, new ServerSwitchListener());
@@ -40,9 +53,9 @@ public class ProxyTablist extends Configurablelugin {
         getProxy().getScheduler().schedule(this, new Runnable() {
             @Override
             public void run() {
-                dh.update();
+                dataHandler.update();
             }
-        }, getConfig().getInt("autorefresh"), getConfig().getInt("autorefresh"), TimeUnit.SECONDS);
+        }, getConfig().getAutoRefresh(), getConfig().getAutoRefresh(), TimeUnit.SECONDS);
 
 
         try {
@@ -50,19 +63,6 @@ public class ProxyTablist extends Configurablelugin {
             metrics.start();
         } catch (Exception ex) {
             getLogger().log(Level.WARNING, "Failed to initialize Metrics!");
-            ex.printStackTrace();
         }
-    }
-
-    public static ProxyTablist getInstance() {
-        return is;
-    }
-
-    public DataHandler getDataHandler() {
-        return dh;
-    }
-
-    public Tablist getTablist() {
-        return tl;
     }
 }

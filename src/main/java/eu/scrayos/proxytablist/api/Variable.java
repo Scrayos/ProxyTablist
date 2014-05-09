@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
  * If it does not it can destroy the View
  *
  * @author Scrayos
+ * @version 1
  */
 public interface Variable {
     /**

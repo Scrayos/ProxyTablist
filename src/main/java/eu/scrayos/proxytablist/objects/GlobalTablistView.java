@@ -17,7 +17,7 @@ public class GlobalTablistView {
      * Create some new Instances for the PlayerTablistViews and recreate the view arrays with the new Size
      */
     public static void init() {
-        newView = new SlotContainer[ProxyTablist.getInstance().getTablist().getSize()];
+        newView = new SlotContainer[ProxyTablist.getInstance().getTablistHandler().getSize()];
 
         //Be sure to clear out all Tablists
         for (Map.Entry<ProxiedPlayer, PlayerTablistView> playerTablistView : new HashMap<>(playerTablistViews).entrySet()) {
@@ -25,7 +25,7 @@ public class GlobalTablistView {
             createPlayerTablistView(playerTablistView.getKey());
         }
 
-        currentView = new SlotContainer[ProxyTablist.getInstance().getTablist().getSize()];
+        currentView = new SlotContainer[ProxyTablist.getInstance().getTablistHandler().getSize()];
     }
 
     /**

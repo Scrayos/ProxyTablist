@@ -17,8 +17,8 @@ public class PlayerTablistView {
      * @param proxiedPlayer for which this PlayerTablistView should send
      */
     public PlayerTablistView(ProxiedPlayer proxiedPlayer) {
-        currentView = new SlotContainer[ProxyTablist.getInstance().getTablist().getSize()];
-        newView = new SlotContainer[ProxyTablist.getInstance().getTablist().getSize()];
+        currentView = new SlotContainer[ProxyTablist.getInstance().getTablistHandler().getSize()];
+        newView = new SlotContainer[ProxyTablist.getInstance().getTablistHandler().getSize()];
 
         this.proxiedPlayer = proxiedPlayer;
 
