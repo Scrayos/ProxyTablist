@@ -71,9 +71,9 @@ public class DataHandler {
                 if (slot == ProxyTablist.getInstance().getTablistHandler().getSize()) {
                     break;
                 }
-                String columnvalue = ProxyTablist.getInstance().getConfig().getCustomColumns().get(c).get(r);
+                String columnValue = ProxyTablist.getInstance().getConfig().getCustomColumns().get(c).get(r);
                 for (Variable v : loadedVariables) {
-                    Matcher m = v.getPattern().matcher(columnvalue);
+                    Matcher m = v.getPattern().matcher(columnValue);
                     while (m.find()) {
                         if (variableContainers[slot] == null) {
                             variableContainers[slot] = new VariableContainer();
