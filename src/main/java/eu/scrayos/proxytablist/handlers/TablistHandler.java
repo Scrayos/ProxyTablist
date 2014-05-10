@@ -32,12 +32,16 @@ public class TablistHandler implements CustomTabList {
 
     @Override
     public int getColumns() {
-        return (int) Math.ceil(getSize() / 20);
+        int columns = 1;
+        while ((getSize() / columns) > 20) {
+            columns++;
+        }
+        return columns;
     }
 
     @Override
     public int getRows() {
-        return (getSize() > 20 ? 20 : getSize());
+        return (getSize() / getColumns());
     }
 
     @Override

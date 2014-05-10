@@ -42,7 +42,7 @@ public class Config extends net.cubespace.Yamler.Config.Config {
         for (int ic = 0; ic < (int) Math.ceil(ProxyTablist.getInstance().getSize() / 20); ic++) {
             customColumns.put(ic, new ArrayList<String>() {
             });
-            for (int ir = 0; ir < (ProxyTablist.getInstance().getSize() < 20 ? ProxyTablist.getInstance().getSize() : 20); ir++) {
+            for (int ir = 0; ir < 20; ir++) {
                 customColumns.get(ic).add("{player}");
             }
         }
