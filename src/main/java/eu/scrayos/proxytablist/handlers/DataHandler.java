@@ -9,7 +9,6 @@ import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashSet;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 
@@ -65,21 +64,14 @@ public class DataHandler {
     }
 
     public void loadConfig() {
-        System.out.println("SIZE: " + ProxyTablist.getInstance().getSize() + "; ROWS: " + ProxyTablist.getInstance().getTablistHandler().getRows() + "; COLUMNS: " + ProxyTablist.getInstance().getTablistHandler().getColumns());
         variableContainers = new VariableContainer[ProxyTablist.getInstance().getTablistHandler().getSize()];
         int slot = 0;
         for (int r = 0; r < ProxyTablist.getInstance().getTablistHandler().getRows(); r++) {
-            System.out.println("ROW: " + r);
             for (int c = 0; c < ProxyTablist.getInstance().getTablistHandler().getColumns(); c++) {
-                System.out.println("COLUMN: " + c + "; ROW: " + r);
                 if (slot == ProxyTablist.getInstance().getTablistHandler().getSize()) {
-                    System.out.println("Interrupted " + slot);
                     break;
                 }
-                System.out.println("Read " + slot);
-                List<String> columnvalues = ProxyTablist.getInstance().getConfig().getCustomColumns().get(c);
-                String columnvalue = columnvalues.get(r);
-                System.out.println("Process " + slot);
+                String columnvalue = ProxyTablist.getInstance().getConfig().getCustomColumns().get(c).get(r);
                 for (Variable v : loadedVariables) {
                     Matcher m = v.getPattern().matcher(columnvalue);
                     while (m.find()) {
