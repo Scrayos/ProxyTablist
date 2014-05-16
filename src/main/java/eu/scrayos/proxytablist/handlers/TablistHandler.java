@@ -22,7 +22,6 @@ public class TablistHandler implements CustomTabList {
             "§0§2", "§1§2", "§2§2", "§3§2", "§4§2", "§5§2", "§6§2", "§7§2", "§8§2", "§9§2", "§a§2", "§b§2", "§c§2", "§d§2", "§e§2", "§f§2", "§l§2", "§m§2", "§n§2", "§o§2", "§k§2", "§r§2",
             "§0§3", "§1§3", "§2§3", "§3§3", "§4§3", "§5§3", "§6§3", "§7§3", "§8§3", "§9§3", "§a§3", "§b§3", "§c§3", "§d§3", "§e§3", "§f§3", "§l§3", "§m§3", "§n§3", "§o§3", "§k§3", "§r§3"}));
     private Iterator it;
-    private int lastRefreshID = -1;
     private int refreshID = 0;
 
     @Override
@@ -62,6 +61,7 @@ public class TablistHandler implements CustomTabList {
     @Override
     public void update() {
         int refreshId = getRefreshID();
+        this.it = placeholders.iterator();
         int slot = 0;
         for (int r = 0; r < ProxyTablist.getInstance().getTablistHandler().getRows(); r++) {
             for (int c = 0; c < ProxyTablist.getInstance().getTablistHandler().getColumns(); c++) {
@@ -143,10 +143,6 @@ public class TablistHandler implements CustomTabList {
     }
 
     public String getPlaceholder() {
-        if (lastRefreshID != ProxyTablist.getInstance().getTablistHandler().getRows()) {
-            lastRefreshID = refreshID;
-            it = placeholders.iterator();
-        }
         return (String) it.next();
     }
 
