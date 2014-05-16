@@ -68,12 +68,13 @@ public class TablistHandler implements CustomTabList {
                 if (slot == ProxyTablist.getInstance().getTablistHandler().getSize()) {
                     break;
                 }
-                String columnvalue = ProxyTablist.getInstance().getConfig().getCustomColumns().get(c).get(r);
+                String possiblePlaceholder = (String) it.next();
+                String columnValue = ProxyTablist.getInstance().getConfig().getCustomColumns().get(c).get(r);
                 if (ProxyTablist.getInstance().getDataHandler().getVariableContainers()[slot] == null) {
-                    if (columnvalue.isEmpty()) {
-                        GlobalTablistView.setSlot(slot + 1, getPlaceholder(), (short) 0);
+                    if (columnValue.isEmpty()) {
+                        GlobalTablistView.setSlot(slot + 1, possiblePlaceholder, (short) 0);
                     } else {
-                        GlobalTablistView.setSlot(slot + 1, ChatColor.translateAlternateColorCodes('&', columnvalue), (short) 0);
+                        GlobalTablistView.setSlot(slot + 1, ChatColor.translateAlternateColorCodes('&', columnValue), (short) 0);
                     }
                 } else {
                     VariableContainer currentVariable = ProxyTablist.getInstance().getDataHandler().getVariableContainers()[slot];
@@ -81,7 +82,7 @@ public class TablistHandler implements CustomTabList {
                         Boolean global = true;
                         Boolean updated = false;
                         short ping = 0;
-                        String text = ChatColor.translateAlternateColorCodes('&', columnvalue);
+                        String text = ChatColor.translateAlternateColorCodes('&', columnValue);
 
                         for (int i = 0; i < currentVariable.getVariable().size(); i++) {
                             Variable variable = currentVariable.getVariable().get(i);
@@ -96,7 +97,7 @@ public class TablistHandler implements CustomTabList {
                         }
                         if (updated) {
                             if (text.isEmpty()) {
-                                text = getPlaceholder();
+                                text = possiblePlaceholder;
                             }
                             if (global) {
                                 GlobalTablistView.setSlot(slot + 1, text, ping);
@@ -140,10 +141,6 @@ public class TablistHandler implements CustomTabList {
     @Override
     public boolean onListUpdate(String s, boolean b, int i) {
         return false;
-    }
-
-    public String getPlaceholder() {
-        return (String) it.next();
     }
 
     public int getRefreshID() {
