@@ -21,12 +21,10 @@ public class TablistHandler implements CustomTabList {
             "§0§1", "§1§1", "§2§1", "§3§1", "§4§1", "§5§1", "§6§1", "§7§1", "§8§1", "§9§1", "§a§1", "§b§1", "§c§1", "§d§1", "§e§1", "§f§1", "§l§1", "§m§1", "§n§1", "§o§1", "§k§1", "§r§1",
             "§0§2", "§1§2", "§2§2", "§3§2", "§4§2", "§5§2", "§6§2", "§7§2", "§8§2", "§9§2", "§a§2", "§b§2", "§c§2", "§d§2", "§e§2", "§f§2", "§l§2", "§m§2", "§n§2", "§o§2", "§k§2", "§r§2",
             "§0§3", "§1§3", "§2§3", "§3§3", "§4§3", "§5§3", "§6§3", "§7§3", "§8§3", "§9§3", "§a§3", "§b§3", "§c§3", "§d§3", "§e§3", "§f§3", "§l§3", "§m§3", "§n§3", "§o§3", "§k§3", "§r§3"}));
-    private Iterator it;
     private int refreshID = 0;
 
     @Override
     public synchronized void clear() {
-        //NOTHING
     }
 
     @Override
@@ -61,7 +59,7 @@ public class TablistHandler implements CustomTabList {
     @Override
     public void update() {
         int refreshId = getRefreshID();
-        this.it = placeholders.iterator();
+        Iterator it = placeholders.iterator();
         int slot = 0;
         for (int r = 0; r < ProxyTablist.getInstance().getTablistHandler().getRows(); r++) {
             for (int c = 0; c < ProxyTablist.getInstance().getTablistHandler().getColumns(); c++) {
@@ -71,11 +69,7 @@ public class TablistHandler implements CustomTabList {
                 String possiblePlaceholder = (String) it.next();
                 String columnValue = ProxyTablist.getInstance().getConfig().getCustomColumns().get(c).get(r);
                 if (ProxyTablist.getInstance().getDataHandler().getVariableContainers()[slot] == null) {
-                    if (columnValue.isEmpty()) {
-                        GlobalTablistView.setSlot(slot + 1, possiblePlaceholder, (short) 0);
-                    } else {
-                        GlobalTablistView.setSlot(slot + 1, ChatColor.translateAlternateColorCodes('&', columnValue), (short) 0);
-                    }
+                    GlobalTablistView.setSlot(slot + 1, (columnValue.isEmpty() ? possiblePlaceholder : ChatColor.translateAlternateColorCodes('&', columnValue)), (short) 0);
                 } else {
                     VariableContainer currentVariable = ProxyTablist.getInstance().getDataHandler().getVariableContainers()[slot];
                     for (ProxiedPlayer pp : ProxyTablist.getInstance().getProxy().getPlayers()) {
@@ -120,22 +114,18 @@ public class TablistHandler implements CustomTabList {
 
     @Override
     public void onConnect() {
-        //NOTHING
     }
 
     @Override
     public void onServerChange() {
-        //NOTHING
     }
 
     @Override
     public void onPingChange(int i) {
-        //NOTHING
     }
 
     @Override
     public void onDisconnect() {
-        //NOTHING
     }
 
     @Override
